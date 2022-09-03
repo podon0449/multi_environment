@@ -1,3 +1,4 @@
 rootProject.name = 'environment'
 include 'multi-api'
 include 'common-core'
+include 'multi-process-rest'
