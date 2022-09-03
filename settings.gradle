@@ -1,2 +1,3 @@
 rootProject.name = 'environment'
 include 'multi-api'
+include 'common-core'
