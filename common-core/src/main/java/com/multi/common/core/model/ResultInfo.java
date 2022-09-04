@@ -11,8 +11,8 @@ import lombok.Setter;
 import java.io.IOException;
 import java.io.Serializable;
 
-import static com.multi.common.core.exception.PodongServiceStatusCode.FAILED;
-import static com.multi.common.core.exception.PodongServiceStatusCode.SUCCESS;
+import static com.multi.common.core.exception.ServiceStatusCode.FAILED;
+import static com.multi.common.core.exception.ServiceStatusCode.SUCCESS;
 
 
 @Getter
@@ -21,11 +21,10 @@ public class ResultInfo implements Serializable {
 
 	private static final long serialVersionUID = 7021191539395886945L;
 
-	// HanteoServiceStatusCode 코드를 사용, Jackson 애노테이션 중 ENUM->INT 변환 관련 코드가 있는 경우 수정바람
 	@JsonDeserialize(using = ResultInfoDeserializer.class)
 	private int code;
 
-	// 에러/실패시 표시되는 상세 메세지, HanteoCommonException 포맷에 맞춰 시간/에러코드/상세내용이 표시됨
+	// 에러/실패시 표시되는 상세 메세지, CommonException 포맷에 맞춰 시간/에러코드/상세내용이 표시됨
 	private String message;
 	// 성공시 표시되는 실제 리스폰스
 	private Object resultData;

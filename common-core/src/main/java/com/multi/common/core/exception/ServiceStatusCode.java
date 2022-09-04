@@ -1,6 +1,6 @@
 package com.multi.common.core.exception;
 
-public enum PodongServiceStatusCode {
+public enum ServiceStatusCode {
 
     // 레거시 코드에 사용되었던 기본적인 상태 코드들
     SUCCESS(100, "[SUCCESS]"),
@@ -52,7 +52,7 @@ public enum PodongServiceStatusCode {
     private int error;
     private String reason;
 
-    PodongServiceStatusCode(int error, String reason) {
+    ServiceStatusCode(int error, String reason) {
         this.error = error;
         this.reason = reason;
     }

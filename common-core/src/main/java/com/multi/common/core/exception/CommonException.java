@@ -14,44 +14,34 @@ import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.multi.common.core.exception.PodongErrorType.ERROR_SQL;
-import static com.multi.common.core.exception.PodongErrorType.ERROR_SYSTEM;
-import static com.multi.common.core.exception.PodongServiceStatusCode.*;
+import static com.multi.common.core.exception.ErrorType.ERROR_SQL;
+import static com.multi.common.core.exception.ErrorType.ERROR_SYSTEM;
+import static com.multi.common.core.exception.ServiceStatusCode.*;
 
-public class PodongCommonException extends NestedRuntimeException {
-/**
-     *  UndeclaredThrowableException 에러를 방지 하기 위하여 Exception을 상속 받지 않고
-     *  NestedRuntimeException을 상속 받았다.  자바 직렬화(serialize)와 관계 있는 것으로 보이며, 기존에 작성된 클래스를 활용하였지만
-     *  추후 보다 근본적인 원인을 파악하여 명확한 클래스를 선택하여야 하겠다.
-     *
-     *  NestedRuntimeException는 기존 Mybatis SqlSessionTemplate에 작성되어 있는 예외처리 PersistenceExceptionTranslator를 참조하여 선택한 클래스이다.
-     *
-     *  TODO errorType에 대한 분류 기준을 세워 적용하여야 한다. /repository 는 errorType에 명시된 타입들과 맵핑이 가능한 디렉토리 구조로 만들어서 디렉토리 명으로 분류한다.
-     */
-
+public class CommonException extends NestedRuntimeException {
 
     @Getter
-    private PodongErrorType type = ERROR_SYSTEM;
+    private ErrorType type = ERROR_SYSTEM;
     @Getter
-    private PodongServiceStatusCode reason = ERROR_SYSTEM_EXCEPTION;
+    private ServiceStatusCode reason = ERROR_SYSTEM_EXCEPTION;
 
     private String message;
 
     // 정보를 노출하기 위한 목적이 아닌 "예외를 던진다"라는 목적에 맞춘 생성자
-    public PodongCommonException() {
+    public CommonException() {
         super("");
         this.message = "";
     }
 
     // 간단한 정보만을 노출시키기 위한 생성자 (메세지를 그대로 출력)
-    public PodongCommonException(String message) {
+    public CommonException(String message) {
         super(message);
 
         setMessage(message);
     }
 
     // 자세한 정보를 실어나르기 위한 생성자
-    public PodongCommonException(PodongErrorType type, PodongServiceStatusCode reason, String message) {
+    public CommonException(ErrorType type, ServiceStatusCode reason, String message) {
         super(message);
 
         setErrorCode(type, reason);
@@ -59,7 +49,7 @@ public class PodongCommonException extends NestedRuntimeException {
     }
 
     // Rest 통신으로 받은 Exception을 해석하기 위한 생성자
-    public PodongCommonException(ResultInfo resultInfo) {
+    public CommonException(ResultInfo resultInfo) {
         super(resultInfo.getMessage());
 
         setErrorCode(resultInfo);
@@ -67,7 +57,7 @@ public class PodongCommonException extends NestedRuntimeException {
     }
 
     // 간단한 정보만을 노출시키기 위한 생성자 (Throwable의 메세지 출력)
-    public PodongCommonException(Throwable throwable) {
+    public CommonException(Throwable throwable) {
         super(throwable.getMessage(), throwable);
 
         setErrorCode(throwable);
@@ -75,7 +65,7 @@ public class PodongCommonException extends NestedRuntimeException {
     }
 
     // 자세한 정보를 실어나르기 위한 생성자
-    public PodongCommonException(PodongErrorType type, PodongServiceStatusCode reason, Throwable throwable) {
+    public CommonException(ErrorType type, ServiceStatusCode reason, Throwable throwable) {
         super(throwable.getMessage(), throwable);
 
         setErrorCode(type, reason);
@@ -88,7 +78,7 @@ public class PodongCommonException extends NestedRuntimeException {
     }
 
     // 에러코드 set
-    private void setErrorCode(PodongErrorType type, PodongServiceStatusCode reason) {
+    private void setErrorCode(ErrorType type, ServiceStatusCode reason) {
         if (type != null) this.type = type;
         if (reason != null) this.reason = reason;
     }
@@ -119,16 +109,17 @@ public class PodongCommonException extends NestedRuntimeException {
         } else if (throwable instanceof HttpMessageNotReadableException || throwable instanceof MethodArgumentTypeMismatchException) { // ENUM 등의 정해진 규격의 값에 규격 외의 파라미터를 입력했을 경우
             String msg = throwable.getMessage();
             if (msg.contains("Failed to convert ") // 형변환 실패
-             || msg.contains("Cannot deserialize ") // JSON 역질렬화 실패
-             || msg.contains("Unrecognized field ") // JSON 바디 잘못 입력
-             || msg.contains("Wrong HtDateTime ")) { // HtDateTime 잘못 입력
+                || msg.contains("Cannot deserialize ") // JSON 역질렬화 실패
+                || msg.contains("Unrecognized field ") // JSON 바디 잘못 입력
+               )
+            { // HtDateTime 잘못 입력
                 setErrorCode(ERROR_SYSTEM, ERROR_PARAM_VALIDITY);
             } else if (msg.contains("Required ")) { // 필수 파라미터 미기입 에러, 파라미터를 입력하지 않은 경우 발생
                 setErrorCode(ERROR_SYSTEM, ERROR_NULL);
             }
-        } else if (throwable instanceof PodongCommonException) {
-            PodongErrorType type = getTypeByMessage(throwable.getMessage());
-            PodongServiceStatusCode reason = getReasonByMessage(throwable.getMessage());
+        } else if (throwable instanceof CommonException) {
+            ErrorType type = getTypeByMessage(throwable.getMessage());
+            ServiceStatusCode reason = getReasonByMessage(throwable.getMessage());
 
             setErrorCode(type, reason);
         }
@@ -180,22 +171,22 @@ public class PodongCommonException extends NestedRuntimeException {
         }
     }
 
-    // 에러 메세지에서 HanteoCommonException의 에러 코드를 찾아주는 메서드
-    private static PodongErrorType getTypeByMessage(String message) {
+    // 에러 메세지에서 CommonException의 에러 코드를 찾아주는 메서드
+    private static ErrorType getTypeByMessage(String message) {
         Matcher matcher = Pattern.compile("(HT_[A-Z_]+)[0-9]+").matcher(message);
         if (matcher.find()) {
             String typeName = matcher.group(1);
-            for (PodongErrorType type : PodongErrorType.values())
+            for (ErrorType type : ErrorType.values())
                 if (ObjectUtils.nullSafeEquals(type.getName(), typeName))
                     return type;
         }
         return ERROR_SYSTEM;
     }
-    private static PodongServiceStatusCode getReasonByMessage(String message) {
+    private static ServiceStatusCode getReasonByMessage(String message) {
         Matcher matcher = Pattern.compile("HT_[A-Z_]+([0-9]+)").matcher(message);
         if (matcher.find()) {
             int reasonError = Integer.parseInt(matcher.group(1));
-            for (PodongServiceStatusCode reason : PodongServiceStatusCode.values())
+            for (ServiceStatusCode reason : ServiceStatusCode.values())
                 if (ObjectUtils.nullSafeEquals(reason.getError(), reasonError))
                     return reason;
         }

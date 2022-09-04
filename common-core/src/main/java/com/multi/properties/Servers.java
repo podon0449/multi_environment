@@ -1,10 +1,14 @@
 package com.multi.properties;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.collections4.MapUtils;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Getter
+@Setter
 public class Servers {
 
     private Map<String, String> url = new HashMap<>();

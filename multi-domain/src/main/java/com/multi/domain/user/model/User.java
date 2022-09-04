@@ -1,4 +1,4 @@
-package com.podong.domain.user.model;
+package com.multi.domain.user.model;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,32 +1,31 @@
 package com.multi.common.core.util;
 
-import com.multi.common.core.exception.PodongCommonException;
-import com.multi.common.core.exception.PodongServiceStatusCode;
+import com.multi.common.core.exception.CommonException;
+import com.multi.common.core.exception.ServiceStatusCode;
 import com.multi.common.core.model.ResultInfo;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
 import java.util.Map;
 
-import static com.multi.common.core.exception.PodongServiceStatusCode.SUCCESS;
+import static com.multi.common.core.exception.ServiceStatusCode.SUCCESS;
 
 @Component
 public class ResultInfoUtil {
     public static final String ADDITIONAL_RESULT_DATA = "AdditionalResultData";
 
-    public static void setAdditionalResultData(Object resultData) {
-        RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
-
-        attributes.setAttribute(ADDITIONAL_RESULT_DATA, resultData, RequestAttributes.SCOPE_REQUEST);
-    }
-
-    public static Object getAdditionalResultData() {
-        RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
-
-        return attributes.getAttribute(ADDITIONAL_RESULT_DATA, RequestAttributes.SCOPE_REQUEST);
-    }
+//    public static void setAdditionalResultData(Object resultData) {
+//        RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
+//
+//        attributes.setAttribute(ADDITIONAL_RESULT_DATA, resultData, RequestAttributes.SCOPE_REQUEST);
+//    }
+//
+//    public static Object getAdditionalResultData() {
+//        RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
+//
+//        return attributes.getAttribute(ADDITIONAL_RESULT_DATA, RequestAttributes.SCOPE_REQUEST);
+//    }
 
     /**
      *  RestApi Return시 사용
@@ -42,33 +41,33 @@ public class ResultInfoUtil {
     }
 
 
-    public static ResultInfo setResultInfo(PodongServiceStatusCode code, Object result) {
+    public static ResultInfo setResultInfo(ServiceStatusCode code, Object result) {
         return setResultInfoForMap(code, result, null);
     }
 
-    public static ResultInfo setResultInfo(PodongServiceStatusCode code, Object result, int keyword) {
+    public static ResultInfo setResultInfo(ServiceStatusCode code, Object result, int keyword) {
         return setResultInfoForMap(code, result, String.valueOf(keyword));
     }
 
-    public static ResultInfo setResultInfo(PodongServiceStatusCode code, Object result, String msg) {
+    public static ResultInfo setResultInfo(ServiceStatusCode code, Object result, String msg) {
         return setResultInfoForMap(code, result, msg);
     }
 
-    public static ResultInfo setResultInfo(PodongServiceStatusCode code, Map<String, Object> resultData) {
+    public static ResultInfo setResultInfo(ServiceStatusCode code, Map<String, Object> resultData) {
         return setResultInfoForMap(code, resultData, null);
     }
 
-    public static ResultInfo setResultInfo(PodongServiceStatusCode code, Map<String, Object> resultData, String msg) {
+    public static ResultInfo setResultInfo(ServiceStatusCode code, Map<String, Object> resultData, String msg) {
         return setResultInfoForMap(code, resultData, msg);
     }
-    public static ResultInfo setResultInfo(PodongCommonException e) {
+    public static ResultInfo setResultInfo(CommonException e) {
         return setResultInfoForMap(e);
     }
-    public static ResultInfo setResultInfo(PodongCommonException e, Object result) {
+    public static ResultInfo setResultInfo(CommonException e, Object result) {
         return setResultInfoForMap(e, result);
     }
 
-    private static ResultInfo setResultInfoForMap(PodongServiceStatusCode code, Object resultData, String msg) {
+    private static ResultInfo setResultInfoForMap(ServiceStatusCode code, Object resultData, String msg) {
         ResultInfo resultInfo = new ResultInfo();
         resultInfo.setCode(code.getError());
         resultInfo.setResultData(resultData);
@@ -76,10 +75,10 @@ public class ResultInfoUtil {
         return resultInfo;
     }
 
-    private static ResultInfo setResultInfoForMap(PodongCommonException e) {
+    private static ResultInfo setResultInfoForMap(CommonException e) {
         return setResultInfoForMap(e, null);
     }
-    private static ResultInfo setResultInfoForMap(PodongCommonException e, Object result) {
+    private static ResultInfo setResultInfoForMap(CommonException e, Object result) {
         ResultInfo resultInfo = new ResultInfo();
         resultInfo.setCode(e.getReason().getError());
         resultInfo.setResultData(result);

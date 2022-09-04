@@ -1,0 +1,5 @@
+name: multi-api
+servers:
+  url:
+    google-auth: 'http://localhost:8190'
+

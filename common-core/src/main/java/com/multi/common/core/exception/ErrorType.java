@@ -1,6 +1,6 @@
 package com.multi.common.core.exception;
 
-public enum PodongErrorType {
+public enum ErrorType {
 
     ERROR(0, "HT_ER_"),
     ERROR_SYSTEM(1, "HT_SY_"),
@@ -13,7 +13,7 @@ public enum PodongErrorType {
     private int type;
     private String name;
 
-    PodongErrorType(int type, String name) {
+    ErrorType(int type, String name) {
         this.type = type;
         this.name = name;
     }
