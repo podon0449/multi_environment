@@ -11,7 +11,7 @@
         </processorPath>
         <module name="environment.multi-domain.main" />
         <module name="environment.common-core.main" />
-        <module name="environment.multi-process-rest.main" />
+        <module name="environment.process-rest.main" />
         <module name="environment.multi-api.main" />
       </profile>
     </annotationProcessing>

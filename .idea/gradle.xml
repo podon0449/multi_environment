@@ -14,7 +14,7 @@
             <option value="$PROJECT_DIR$/common-core" />
             <option value="$PROJECT_DIR$/multi-api" />
             <option value="$PROJECT_DIR$/multi-domain" />
-            <option value="$PROJECT_DIR$/multi-process-rest" />
+            <option value="$PROJECT_DIR$/process-rest" />
           </set>
         </option>
       </GradleProjectSettings>
