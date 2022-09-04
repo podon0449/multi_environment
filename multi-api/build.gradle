@@ -1,6 +1,6 @@
 
 dependencies { // 메인 프로젝트의 종속성 설정
-    implementation project(':multi-process-rest')
+    implementation project(':process-rest')
     implementation project(':common-core')
     implementation project(':multi-domain')
 
