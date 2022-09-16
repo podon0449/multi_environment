@@ -15,8 +15,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 import javax.servlet.http.HttpServletRequest;
 
 import static com.multi.common.core.exception.ServiceStatusCode.SUCCESS;
-import static com.multi.common.core.util.HttpLogger.writeObjectLog;
 import static com.multi.common.core.util.ResultInfoUtil.setResultInfo;
+import static com.multi.process.rest.util.HttpLogger.writeObjectLog;
 
 /**
  * ResponseProcess 모듈은 basePackages에 명시된 패키지의 Controller에서 Return 되어진
@@ -58,7 +58,6 @@ public class ResponseProcess implements ResponseBodyAdvice<Object> {
             Class<? extends HttpMessageConverter<?>> selectedConverterType,
             ServerHttpRequest request, ServerHttpResponse response) {
         if (body instanceof ResultInfo) {
-            // dev ResultInfo 형태로 넘어오는 형태는 Exception외에는 없다. 의진
             writeObjectLog(body);
             return body;
         } else {

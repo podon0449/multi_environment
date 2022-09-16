@@ -21,6 +21,7 @@ import java.io.InputStream;
         basePackages = {
                 "com.multi.spring",
                 "com.multi.process.rest",
+                "com.multi.domain"
         }
 )
 public class BasicConfiguration {
