@@ -20,7 +20,7 @@ import static com.multi.process.rest.util.HttpLogger.writeObjectLog;
 
 /**
  * ResponseProcess 모듈은 basePackages에 명시된 패키지의 Controller에서 Return 되어진
- * HanteoCommonException 및 Value 들에 대하여 후처리 하는 모듈이다.
+ * CommonException 및 Value 들에 대하여 후처리 하는 모듈이다.
  *
  * 1. 넘어온 모든 요청은 ResultInfo로 Wrapping되어 Return 되어진다.
  *

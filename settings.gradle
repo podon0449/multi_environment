@@ -1,5 +1,7 @@
 rootProject.name = 'environment'
 include 'multi-api'
+include 'multi-admin'
 include 'common-core'
+include 'common-util'
 include 'multi-domain'
 include 'process-rest'

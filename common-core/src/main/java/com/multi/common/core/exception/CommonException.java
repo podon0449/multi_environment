@@ -157,7 +157,7 @@ public class CommonException extends NestedRuntimeException {
     private void setMessage(ResultInfo resultInfo) {
         this.message =  this.type.getName() + this.reason.getError() + " " + this.reason.getReason() + ": ";
 
-        // ResultInfo에서 이미 만들어진 HanteoCommonException 메세지를 받아와 실제 메세지 부분만 추출함
+        // ResultInfo에서 이미 만들어진 CommonException 메세지를 받아와 실제 메세지 부분만 추출함
         Matcher matcher = Pattern.compile("^\\[.+?: (.+)").matcher(resultInfo.getMessage());
         if (matcher.find()) this.message += matcher.group(1);
     }
