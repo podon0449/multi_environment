@@ -1,4 +1,8 @@
-
+apply plugin: 'java'
+apply plugin: 'java-library'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
 buildscript {
     ext {
         springBootVersion = '2.4.2'
@@ -48,12 +52,23 @@ subprojects {
         testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
         api ("org.springframework.boot:spring-boot-starter-web:2.4.2")
 
-
     }
-
     test {
         useJUnitPlatform()
     }
-
 }
+def profile = project.hasProperty("profile") ? project.property("profile").toString() : "local"
+println "profile  : $profile"
+
+
+ext.profile = (!project.hasProperty('profile') || !profile) ? "$profile" : profile
+sourceSets {
+    main{
+        resources {
+            srcDirs "src/main/resources-${profile}"
+            /*exclude "resources-*"*/
+        }
+    }
+}
+
 
