@@ -3,9 +3,8 @@ package com.multi.spring.controller;
 import com.multi.domain.user.model.UserExcelDetailCol;
 import com.multi.spring.service.ExcelUtilBO;
 import com.multi.spring.service.user.UserBO;
-import com.multi.util.excel.ExcelFile;
-import com.multi.util.excel.poi.PoiSheetExcelFile;
-import com.multi.util.excel.poi.resource.ExcelCustomHeader;
+import com.podong.ExcelFile;
+import com.podong.poi.PoiSheetExcelFile;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 
-import static com.multi.util.excel.poi.resource.ExcelCustomHeader.USER_COLUMN;
+import static com.podong.poi.resource.ExcelCustomHeader.USER_COLUMN;
 
 
 @Api(tags = "POI 엑셀-API")
@@ -35,7 +34,6 @@ public class PoiExcelController {
         List<UserExcelDetailCol> userExcelDetailColList = userBO.getUserExcelDetailColList();
 
         ExcelFile excelFile = new PoiSheetExcelFile(userExcelDetailColList, UserExcelDetailCol.class);
-        excelFile.setResponse(response);
         excelFile.write(response.getOutputStream());
     }
     @ApiOperation(value = "poi 엑셀 유저 커스텀 다운로드")
@@ -59,7 +57,6 @@ public class PoiExcelController {
         List<String> fieldKeys = excelUtilBO.getExcelFieldList(excelMetaList.get(0).keySet());
         ExcelFile excelFile = new PoiSheetExcelFile(excelMetaList, headerKeys, fieldKeys, USER_COLUMN);
 
-        excelFile.setResponse(response);
         excelFile.write(response.getOutputStream());
     }
 }

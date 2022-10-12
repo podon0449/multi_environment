@@ -1,11 +1,9 @@
 package com.multi.spring.controller;
 
-import com.multi.domain.user.model.UserExcelDetailCol;
 import com.multi.domain.user.model.UserExcelFiled;
 import com.multi.spring.service.user.UserBO;
-import com.multi.util.excel.ExcelFile;
-import com.multi.util.excel.gc.GcSheetExcelFile;
-import com.multi.util.excel.poi.PoiSheetExcelFile;
+import com.podong.ExcelFile;
+import com.podong.gc.GcSheetExcelFile;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -46,7 +44,6 @@ public class PivotExcelController {
         }
         ExcelFile excelFile = new GcSheetExcelFile(sourceList, UserExcelFiled.class);
 
-        excelFile.setResponse(response);
 
         excelFile.write(response.getOutputStream());
 

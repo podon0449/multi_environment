@@ -1,6 +1,6 @@
 package com.multi.domain.user.model;
 
-import com.multi.common.core.model.PivotEnumModel;
+import com.podong.annotation.PivotEnumModel;
 
 /**
  * 해당 필드와 데이터를 매칭시키는 enum

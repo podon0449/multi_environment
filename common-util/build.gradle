@@ -10,7 +10,6 @@ apply plugin: 'java-test-fixtures'
 
 dependencies {
     implementation project(':common-core')
-
     // Javadoc의 원할한 처리를 위한 종속성 설정
     // https://mvnrepository.com/artifact/javax.interceptor/javax.interceptor-api
     api group: 'javax.interceptor', name: 'javax.interceptor-api', version: '1.2.2'
