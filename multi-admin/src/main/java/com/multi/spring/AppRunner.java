@@ -1,3 +1,4 @@
+/*
 package com.multi.spring;
 
 import com.multi.process.rest.annotation.EnableStub;
@@ -24,3 +25,4 @@ public class AppRunner implements ApplicationRunner {
         System.out.println("=============");        System.out.println(name);        System.out.println(age);        System.out.println(fullName);        System.out.println("=============");
     }
 }
+*/

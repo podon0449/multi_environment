@@ -1,6 +1,6 @@
 package com.multi.spring.controller;
 
-import com.multi.domain.user.model.UserExcelFiled;
+import com.multi.domain.user.model.UserExcelField;
 import com.multi.spring.service.user.UserBO;
 import com.podong.ExcelFile;
 import com.podong.gc.GcSheetExcelFile;
@@ -42,7 +42,7 @@ public class PivotExcelController {
             list.add(i + 1000);
             sourceList.add(list);
         }
-        ExcelFile excelFile = new GcSheetExcelFile(sourceList, UserExcelFiled.class);
+        ExcelFile excelFile = new GcSheetExcelFile(sourceList, UserExcelField.class);
 
 
         excelFile.write(response.getOutputStream());

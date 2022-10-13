@@ -14,7 +14,7 @@ import com.podong.annotation.PivotEnumModel;
  *
  *    type 은 넘어온 list 인덱스 순서 //
  * */
-public enum UserExcelFiled implements PivotEnumModel {
+public enum UserExcelField implements PivotEnumModel {
     RANK(0,"순위", false, 0),
     USER_IDX(1,"유저정보", true, 2),
     COUNTRY(2,"국가", false, 0),
@@ -28,7 +28,7 @@ public enum UserExcelFiled implements PivotEnumModel {
     private boolean active;
     private int pivotFieldOrientation;
 
-    UserExcelFiled(int type, String name, boolean active, int pivotFieldOrientation) {
+    UserExcelField(int type, String name, boolean active, int pivotFieldOrientation) {
         this.type = type;
         this.name = name;
         this.active = active;
